@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style></style>
+    <script src="scripts/LoadMasterPage.js"></script>
+</head>
+<body>
+    
+    
+    <div id="divgallery">
+
+        <img id="slide" src="" alt="Slideshow Images" title="Gallery Images" onerror="this.onerror=null; this.src='images/404_error.jpg';">
+
+    </div>
+
+    <script>
+
+        //image array to store all image paths
+        var arrgallery = new Array();
+
+        //add images to array
+        var k; 
+        for(k=0; k<=7; k++){
+            arrgallery[k] = (k+1) + '.jpg';
+        }
+
+        //holds current index of loaded image
+        var imgIndex = 0; 
+
+        //load and slide images
+        function slideshow(){
+            document.getElementById("slide").setAttribute("src", "images/slide/image_"+ arrgallery[imgIndex]);
+            imgIndex = (imgIndex < arrgallery.length-1)? imgIndex + 1 : 0; //control looping process
+        }
+
+        //set timer || use document instead of window event 
+        window.onload=function(){
+            setInterval("slideshow()", 5000); //setTimeout("slideshow()", 5000);
+        }
+
+    </script>
+
+</body>
+</html>

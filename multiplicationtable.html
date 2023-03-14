@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <title>CSS Box Models</title>
+        <meta charset="utf-8">
+        <meta name="device-width, initial-scale=1.0">
+        <style>
+            /*
+            #divtable{
+                border: 10px solid transparent;
+                padding: 5px;
+                border-image: url("images/border_image.jpeg") 30% round;
+                min-width: min-content;
+                overflow-x: visible;
+            }*/
+            table#tbl, tr, td{
+                border: 2px groove turquoise;
+                border-collapse: collapse;
+                padding: 10px;
+                text-align: center;
+            }
+            table tr:nth-child(1) td{
+                background-image:linear-gradient(180deg, yellow, mintcream, cyan); 
+                font-weight: normal;
+                color: fuchsia;
+            }
+            table#tbl tr>td:nth-child(1){
+                background-image:linear-gradient(90deg, yellow, mintcream, cyan); 
+                font-weight: normal;
+                color: fuchsia;
+            }
+            .squares{
+                background-image:radial-gradient(yellow, mintcream, aqua);
+            }
+            table#tbl tr:not(tr:nth-child(1)):hover{
+                /*background-image:linear-gradient(lightgreen, lightcyan, azure, mintcream, honeydew, yellow);*/
+                background-image:linear-gradient(transparent, transparent, transparent, transparent, rgb(214, 245, 245), yellow);
+            }
+            table#tbl tr:not(tr:nth-child(1))>td:hover::before{
+                position: relative;
+            }
+            table#tbl tr:not(tr:nth-child(1))>td:not(td:nth-child(1)):hover::after{
+                background-image:linear-gradient(yellow, honeydew, greenyellow, teal);
+                content: '\00a0';
+                position: absolute;
+                top: -5000px;  
+                height: 10000px;
+                opacity: 0.9; 
+                z-index: -1;
+            }
+
+            table#tbl th, table#tbl tr:nth-child(1) td{
+                position: -webkit-sticky; /* this is for all Safari (Desktop & iOS), not for Chrome */
+                position: sticky;
+                top: 0;
+            }
+            table#tbl td:nth-child(1) {
+                position: -webkit-sticky; /* this is for all Safari (Desktop & iOS), not for Chrome */
+                position: sticky;
+                left: 0;
+            }
+            table#tbl tr:nth-child(1) > td:nth-child(1) {
+                background-image:linear-gradient(135deg, yellow, mintcream, cyan  130%); 
+                position: -webkit-sticky; /* this is for all Safari (Desktop & iOS), not for Chrome */
+                position: sticky;
+                left: 0;
+                z-index: 10; /* any positive value, layer order is global - float above */
+            }
+        </style>
+        <script src="scripts/LoadMasterPage.js"></script>
+    </head>
+    <body>
+
+        <div id="divtable">
+           <table id="tbl">
+
+                <script>
+
+                    var tbldef = "";
+                    for (var i = 0; i <= 100; i++) {
+                        tbldef += "<tr>";
+                        for (var j = 0; j <= 100; j++) {
+                            var squares = ((i === j) && (i>0)) ? "squares" : "";
+                            tbldef += "<td onclick = 'ShowMessage(this)' class='" + squares + "'>" + ((i == 0 && j == 0) ? "❌" : ((i == 0) ? 1 : i) * ((j == 0) ? 1 : j)) + "</td>";
+                        }
+                        tbldef += "</tr>";
+                    }
+                    document.write(tbldef);
+            
+                /* show message function */
+                function ShowMessage(cell){
+                    var x = cell.parentNode.rowIndex; //cell.closest('tr').rowIndex;
+                    var y = cell.cellIndex;
+                    var ans = cell.innerText;
+                    if(Number(x) * Number(y) == 0) { return; }
+                    //
+                    var line1=`${x}    ❌    ${y}  🟰   ${ans}`;
+                    var linelength = line1.length;
+                    var posleft = (110 - linelength)/2; //standard line length on alert is around 100chars 10 added to compensate for more spaces: depends on char sizes though
+                    var filler1="";
+                    for(x=1; x<=posleft; x++){
+                        filler1+=" ";
+                    }
+                    //
+                    var line2=`😊~ ~ ~  T H A N K   Y O U  ~ ~ ~🙏`;
+                    linelength = line2.length;
+                    posleft = (100 - linelength)/2;
+                    var filler2="";
+                    for(x=1; x<=posleft; x++){
+                        filler2+=" ";
+                    }
+                    alert(`${filler1}${line1}\n\n${filler2}${line2}`);
+                    //alert(`\n${x}    X    ${y}  =   ${ans}   \n\n   😊~ ~ ~  T H A N K   Y O U  ~ ~ ~🙏`);
+                }
+                /* end function */
+
+                </script>
+           </table>
+         </div>
+
+        <script></script>
+
+    </body>
+</html>
